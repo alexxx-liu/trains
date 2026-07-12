@@ -1,0 +1,12 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - analysis.qmd
+
+website:
+  title: "Trains"
+  navbar:
+    left:
+      - href: analysis.html
+        text: Analysis

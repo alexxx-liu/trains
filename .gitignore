@@ -1,2 +1,5 @@
 analysis_files
 analysis_cache
+
+/.quarto/
+**/*.quarto_ipynb
