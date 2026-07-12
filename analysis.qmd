@@ -1,0 +1,44 @@
+---
+title: "Trains"
+format: html
+execute:
+  echo: false
+---
+
+## Summary
+
+Attitudes toward immigration, as reported on standardized survey scales, can shift in response to brief social exposure to speakers of another language. Using data from Ryan Enos's January 2012 platform-randomized field experiment on the MBTA Commuter Rail, we investigate the average causal effect of exposure to Spanish-speaking confederates on commuters' post-experiment immigration attitude scores. A key weakness of this model is that it relies on a narrow, non-randomly-selected sample of 115 Boston-area commuters from a single two-week window in 2012, meaning the confidence interval — though statistically valid for that sample — likely understates the true uncertainty involved in generalizing the estimated effect to any broader or more current population.
+
+```{r}
+#| label: setup
+#| include: false
+#| message: false
+library(tidyverse)
+library(primer.data)
+library(broom)
+```
+
+```{r}
+#| echo: true
+library(primer.data)
+library(tidyverse)
+
+data("trains", package = "primer.data")
+
+ggplot(trains, aes(x = treatment, y = att_end)) +
+  geom_jitter(width = 0.1, alpha = 0.7, color = "steelblue") +
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 4, color = "red") +
+  labs(
+    title = "Individual att_end values by treatment group",
+    subtitle = "Each point is one person; the red point shows the group mean",
+    x = "Treatment",
+    y = "att_end",
+    caption = "Data from the trains tibble"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+glimpse(trains)
+```
+
