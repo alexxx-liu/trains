@@ -1,11 +1,15 @@
----
-title: "Trains"
-format: html
-execute:
-  echo: false
----
-
-```{r}
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #| label: setup
 #| include: false
 #| message: false
@@ -14,9 +18,9 @@ library(primer.data)
 library(broom)
 library(knitr)
 library(marginaleffects)
-```
-
-```{r}
+#
+#
+#
 #| echo: true
 library(primer.data)
 library(tidyverse)
@@ -34,37 +38,37 @@ ggplot(trains, aes(x = treatment, y = att_end)) +
     caption = "Data from the trains tibble"
   ) +
   theme_minimal()
-```
-
-```{r}
+#
+#
+#
 glimpse(trains)
-```
-
-```{r}
+#
+#
+#
 library(parsnip)
 
 model_spec <- linear_reg(engine = "lm") |>
   fit(att_end ~ treatment, data = trains)
 model_spec
-```
-
-```{r}
+#
+#
+#
 linear_reg(engine = "lm") |>
   fit(att_end ~ treatment + age, data = trains)
-```
-
-```{r}
+#
+#
+#
 #| cache: true
 fit_att <- linear_reg(engine = "lm") |>
   fit(att_end ~ treatment + age, data = trains)
-```
-
-```{r}
+#
+#
+#
 #| echo: true
 predictions(fit_att)
-```
-
-```{r}
+#
+#
+#
 pred_data <- plot_predictions(fit_att, condition = "treatment", draw = FALSE)
 
 pred_data |>
@@ -91,17 +95,13 @@ pred_data |>
     plot.caption = element_text(hjust = 0, face = "italic"),
     axis.title = element_text(face = "bold")
   )
-```
-
-## Summary
-
-Attitudes toward immigration can shift in response to brief social exposure to speakers of another language. Using data from Ryan Enos's January 2012 platform-randomized field experiment on the MBTA Commuter Rail, we estimate the average causal effect of exposure to Spanish-speaking confederates on commuters' post-experiment immigration attitude scores (att_end, 3–15 scale). We model att_end as a linear function of treatment status. Treated commuters are expected to score about 1.55 points higher than Control commuters; this estimate barely changes (1.47) after adjusting for age, as expected under proper randomization. A key weakness is the narrow, non-random sample of 115 Boston-area commuters from a single 2012 window, meaning the confidence interval likely understates the true uncertainty in generalizing this effect to a broader or more current population. The estimated average causal effect of exposure on immigration attitudes is about 1.55 points on the 3–15 scale, with a 95% confidence interval of roughly [0.51, 2.58].
-
-```{r}
+#
+#
+#
 tidy(fit_att, conf.int = TRUE)
-```
-
-```{r}
+#
+#
+#
 model_table <- tidy(fit_att, conf.int = TRUE) |>
   select(term, estimate, conf.low, conf.high) |>
   mutate(
@@ -115,5 +115,8 @@ kable(
   caption = "Model estimates from the trains data source (primer.data::trains)",
   col.names = c("Term", "Estimate", "95% CI Lower", "95% CI Upper")
 )
-```
-
+#
+#
+#
+#
+#

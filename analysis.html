@@ -101,9 +101,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>Attitudes toward immigration, as reported on standardized survey scales, can shift in response to brief social exposure to speakers of another language. Using data from Ryan Enos’s January 2012 platform-randomized field experiment on the MBTA Commuter Rail, we investigate the average causal effect of exposure to Spanish-speaking confederates on commuters’ post-experiment immigration attitude scores.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(primer.data)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -147,6 +144,112 @@ $ station        &lt;chr&gt; "Grafton", "Southborough", "Grafton", "Grafton", "G
 $ hisp_perc      &lt;dbl&gt; 0.0264, 0.0154, 0.0191, 0.0191, 0.0191, 0.0231, 0.0304,…
 $ ideology_start &lt;int&gt; 3, 4, 1, 4, 2, 5, 5, 4, 4, 4, 3, 5, 4, 1, 2, 2, 3, 4, 2…
 $ ideology_end   &lt;int&gt; 3, 4, 2, 4, 2, 5, 5, 4, 3, 4, 3, 4, 4, 1, 2, 3, 3, 1, 2…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+
+Call:
+stats::lm(formula = att_end ~ treatment, data = data)
+
+Coefficients:
+     (Intercept)  treatmentTreated  
+           8.453             1.547  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+
+Call:
+stats::lm(formula = att_end ~ treatment + age, data = data)
+
+Coefficients:
+     (Intercept)  treatmentTreated               age  
+         9.22162           1.46839          -0.01732  </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(fit_att)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Estimate Std. Error    z Pr(&gt;|z|)     S 2.5 % 97.5 %
+    10.15      0.434 23.4   &lt;0.001 398.9  9.30  11.00
+    10.10      0.410 24.7   &lt;0.001 443.3  9.30  10.90
+     9.60      0.636 15.1   &lt;0.001 168.4  8.35  10.85
+     9.91      0.405 24.4   &lt;0.001 436.1  9.12  10.71
+     8.27      0.417 19.8   &lt;0.001 287.7  7.45   9.09
+--- 105 rows omitted. See ?print.marginaleffects ---
+     8.27      0.417 19.8   &lt;0.001 287.7  7.45   9.09
+     8.49      0.352 24.2   &lt;0.001 426.0  7.81   9.18
+     8.04      0.620 13.0   &lt;0.001 125.4  6.83   9.26
+     8.32      0.385 21.6   &lt;0.001 341.3  7.57   9.08
+     9.82      0.448 21.9   &lt;0.001 352.0  8.95  10.70
+Type: numeric</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `fatten` argument of `geom_pointrange()` is deprecated as of ggplot2 4.0.0.
+ℹ Please use the `size` aesthetic instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Attitudes toward immigration can shift in response to brief social exposure to speakers of another language. Using data from Ryan Enos’s January 2012 platform-randomized field experiment on the MBTA Commuter Rail, we estimate the average causal effect of exposure to Spanish-speaking confederates on commuters’ post-experiment immigration attitude scores (att_end, 3–15 scale). We model att_end as a linear function of treatment status. Treated commuters are expected to score about 1.55 points higher than Control commuters; this estimate barely changes (1.47) after adjusting for age, as expected under proper randomization. A key weakness is the narrow, non-random sample of 115 Boston-area commuters from a single 2012 window, meaning the confidence interval likely understates the true uncertainty in generalizing this effect to a broader or more current population. The estimated average causal effect of exposure on immigration attitudes is about 1.55 points on the 3–15 scale, with a 95% confidence interval of roughly [0.51, 2.58].</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 7
+  term             estimate std.error statistic  p.value conf.low conf.high
+  &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)        9.22      1.03       9.00  6.83e-15   7.19     11.3   
+2 treatmentTreated   1.47      0.531      2.76  6.70e- 3   0.415     2.52  
+3 age               -0.0173    0.0217    -0.797 4.27e- 1  -0.0604    0.0257</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Model estimates from the trains data source (primer.data::trains)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Term</th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">95% CI Lower</th>
+<th style="text-align: right;">95% CI Upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">9.2200</td>
+<td style="text-align: right;">7.1900</td>
+<td style="text-align: right;">11.3000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">treatmentTreated</td>
+<td style="text-align: right;">1.4700</td>
+<td style="text-align: right;">0.4150</td>
+<td style="text-align: right;">2.5200</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">-0.0173</td>
+<td style="text-align: right;">-0.0604</td>
+<td style="text-align: right;">0.0257</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
